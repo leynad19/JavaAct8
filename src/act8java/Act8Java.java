@@ -22,6 +22,7 @@ public class Act8Java {
     public static BufferedReader entrada =new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
+       boolean repetir = true;
         String[] palo = {"Pika", "Corazon", "Diamante", "Trebol"};
         String[] valor = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         Deck deck = new Deck();
@@ -33,10 +34,18 @@ public class Act8Java {
             }
         }
         System.out.println("Bienvenido a Poker!");
-        showMenu(deck);
+
+        while(repetir){
+            try {
+                showMenu(deck);
+                repetir = false;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
     
-    public static void showMenu(Deck deck) throws IOException{
+    public static void showMenu(Deck deck) throws Exception{
         System.out.println("---------------------------");
         System.out.println("Selecciona una opción:");
         System.out.println("1 Mezclar deck");
@@ -54,18 +63,36 @@ public class Act8Java {
                 break;
             case "2":
                 System.out.println("Seleccionaste 'Sacar carta':");
+                try {
                 deck.head();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Fin del programa");
+                    System.exit(0);
+                }
                 showMenu(deck);
                 break;
             case "3":
                 System.out.println("Seleccionaste 'Carta al azar':");
+                try {
                 deck.pick();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Fin del programa");
+                    System.exit(0);
+                }
                 showMenu(deck);
                 break;
             case "4":
                 System.out.println("Seleccionaste 'Generar una mano de "
                         + "5 cartas':");
+                try {
                 deck.hand();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Fin del programa");
+                    System.exit(0);
+                }
                 showMenu(deck);
                 break;
             case "0":
@@ -73,10 +100,8 @@ public class Act8Java {
                 System.out.println("Adios, has salido del Poker");
                 break;
             default:
-                System.out.println("Opción no válida");
-                System.out.println("Ingrese una que lo sea");
-                showMenu(deck);
-        }
+                throw new Exception("Opción no válida");
+        } 
     }
     
     public static String getColor(String palo) {
